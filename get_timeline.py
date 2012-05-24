@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 from gopherbot import GopherBot
-from twitterbotglobals import *
+from gbglobals import *
 
 from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Boolean
@@ -20,6 +20,13 @@ import time
 import re
 
 Base = declarative_base()
+def to_datetime(datestring):
+    """
+    Converts the datetime string to a datetime python object.
+    """
+    time_tuple = parsedate_tz(datestring.strip())
+    dt = datetime(*time_tuple[:6])
+    return dt - timedelta(seconds=time_tuple[-1])
 
 class MediaEntity(Base):
     """
